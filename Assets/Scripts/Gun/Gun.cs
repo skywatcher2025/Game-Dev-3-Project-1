@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public static Action OnShoot;
     public Transform BulletSpawnPoint => _bulletSpawnPoint;
 
     [SerializeField] Transform _bulletSpawnPoint;
@@ -15,11 +17,21 @@ public class Gun : MonoBehaviour
         RotateGun();
     }
 
+    void OnEnable()
+    {
+        OnShoot += ShootProjectile;
+    }
+
+    void OnDisable()
+    {
+        OnShoot -= ShootProjectile;
+    }
+
     void Shoot()
     {
         if (Input.GetMouseButtonDown(0)) 
         {
-            ShootProjectile();
+            OnShoot?.Invoke(); //Question mark (?) checks if "OnShoot" is null
         }
     }
 

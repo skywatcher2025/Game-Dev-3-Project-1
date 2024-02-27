@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -14,22 +15,18 @@ public class Bullet : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    void Start() 
-    {
-        if (PlayerController.Instance.IsFacingRight()) 
-        {
-            _fireDirection = Vector2.right;
-        } else 
-        {
-            _fireDirection = Vector2.left;
-        }
-    }
-
     void FixedUpdate()
     {
         _rigidBody.velocity = _fireDirection * _moveSpeed;
     }
 
+    public void Init(Vector2 bulletSpawnPos, Vector2 mousePos)
+    {
+        _fireDirection = (mousePos - bulletSpawnPos).normalized;
+        float angle = Mathf.Atan2(_fireDirection.y, _fireDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+    
     void OnTriggerEnter2D(Collider2D other) 
     {
         Health health = other.gameObject.GetComponent<Health>();

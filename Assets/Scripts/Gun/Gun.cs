@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Cinemachine;
 
 public class Gun : MonoBehaviour
 {
@@ -12,10 +13,12 @@ public class Gun : MonoBehaviour
     private static readonly int FIRE_HASH = Animator.StringToHash("Fire");
     private Vector2 _mousePos;
 
+    private CinemachineImpulseSource _impulseSource;
     private Animator _animator;
 
     void Awake()
     {
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
         _animator = GetComponent<Animator>();
     }
 
@@ -29,12 +32,14 @@ public class Gun : MonoBehaviour
     {
         OnShoot += ShootProjectile;
         OnShoot += FireAnimation;
+        OnShoot += ScreenShake;
     }
 
     void OnDisable()
     {
         OnShoot -= ShootProjectile;
         OnShoot -= FireAnimation;
+        OnShoot -= ScreenShake;
     }
 
     void Shoot()
@@ -54,6 +59,11 @@ public class Gun : MonoBehaviour
     void FireAnimation()
     {
         _animator.Play(FIRE_HASH, 0,0f);
+    }
+
+    void ScreenShake()
+    {
+        _impulseSource.GenerateImpulse();
     }
 
     void RotateGun()

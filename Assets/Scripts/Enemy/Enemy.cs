@@ -3,41 +3,31 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] float _moveSpeed = 3f;
     [SerializeField] float _jumpForce = 7f;
     [SerializeField] float _jumpInterval = 4f;
     [SerializeField] float _changeDirectionInterval = 3f;
 
-    int _currentDirection;
-
     Rigidbody2D _rigidBody;
+    private Movement _movement;
 
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _movement = GetComponent<Movement>();
     }
 
-    void Start() {
+    void Start() 
+    {
         StartCoroutine(ChangeDirection());
         StartCoroutine(RandomJump());
-    }
-
-    void FixedUpdate()
-    {
-        Move();
-    }
-
-    void Move()
-    {
-        Vector2 newVelocity = new(_currentDirection * _moveSpeed, _rigidBody.velocity.y);
-        _rigidBody.velocity = newVelocity;
     }
 
     IEnumerator ChangeDirection()
     {
         while (true)
         {
-            _currentDirection = Random.Range(0, 2) * 2 - 1; // 1 or -1
+            float currentDirection = Random.Range(0, 2) * 2 - 1; // 1 or -1
+            _movement.SetCurrentDirection(currentDirection);
             yield return new WaitForSeconds(_changeDirectionInterval);
         }
     }

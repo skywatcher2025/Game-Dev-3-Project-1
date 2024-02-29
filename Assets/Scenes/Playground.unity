@@ -665,7 +665,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 0000000089b5f33a17b73c7c710a93e835105f60
+  m_ApplyToSortingLayers: b97d340c00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -709,6 +709,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &648817456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 648817457}
+  m_Layer: 0
+  m_Name: FootTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &648817457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648817456}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.048, y: -1.092, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2011273886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &710606985
 GameObject:
@@ -918,6 +949,7 @@ GameObject:
   - component: {fileID: 2011273896}
   - component: {fileID: 2011273892}
   - component: {fileID: 2011273891}
+  - component: {fileID: 2011273898}
   - component: {fileID: 2011273889}
   - component: {fileID: 2011273888}
   - component: {fileID: 2011273897}
@@ -4836,6 +4868,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2076065032}
+  - {fileID: 648817457}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2011273888
@@ -4852,7 +4885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 3
+    m_ImpulseShape: 1
     m_CustomImpulseShape:
       serializedVersion: 2
       m_Curve:
@@ -4908,7 +4941,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0.05, y: 0.08, z: 0}
+  m_DefaultVelocity: {x: 0, y: 0.1, z: 0}
 --- !u!50 &2011273889
 Rigidbody2D:
   serializedVersion: 4
@@ -4968,8 +5001,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.094358444, y: -0.061323404}
-  m_Size: {x: 0.8340454, y: 2.0314536}
+  m_Offset: {x: -0.059106827, y: 0.05618143}
+  m_Size: {x: 0.90454865, y: 1.7964439}
   m_Direction: 0
 --- !u!114 &2011273892
 MonoBehaviour:
@@ -4996,6 +5029,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac92c8116167b104b829fceb3bfadda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _footTransform: {fileID: 648817457}
+  _groundCheck: {x: 0.69, y: 0.2}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   _moveSpeed: 20
   _jumpStrength: 10
 --- !u!95 &2011273897
@@ -5019,6 +5057,41 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!70 &2011273898
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817729410}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.057989184, y: -0.96788234}
+  m_Size: {x: 0.68665695, y: 0.2472345}
+  m_Direction: 1
 --- !u!1 &2043640393
 GameObject:
   m_ObjectHideFlags: 0

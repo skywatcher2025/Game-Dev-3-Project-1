@@ -7,13 +7,14 @@ using UnityEngine.Pool;
 
 public class ObjectPoolExample : MonoBehaviour
 {
+    /*
     private ObjectPool<Transform> _transformPool;
 
     // Start is called before the first frame update
     void Start()
     {
         CreateTransformPool();
-    } 
+    }
     
     void Update()
     {
@@ -27,6 +28,7 @@ public class ObjectPoolExample : MonoBehaviour
         _transformPool = new ObjectPool<Transform>(() =>
         {
             //return Instantiate(GameObject); //Instantiate whatever prefab you're using
+
         }, transform =>
         {
             transform.GameObject().SetActive(true);
@@ -38,4 +40,5 @@ public class ObjectPoolExample : MonoBehaviour
             Destroy(transform);
         }, false, 20, 40);
     }
+    */
 }

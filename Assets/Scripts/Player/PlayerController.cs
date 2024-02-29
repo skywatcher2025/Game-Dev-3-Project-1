@@ -1,15 +1,17 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
 
+    [SerializeField] Transform _footTransform;
+    [SerializeField] Vector2 _groundCheck;
+    [SerializeField] LayerMask _groundLayer;
     [SerializeField] float _moveSpeed = 5f;
     [SerializeField] float _jumpStrength = 7f;
 
-    bool _isGrounded = false;
     Vector2 _movement;
-
     Rigidbody2D _rigidBody;
     Animator _animator;
     
@@ -33,25 +35,15 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            _isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            _isGrounded = false;
-        }
-    }
-
     public bool IsFacingRight()
     {
         return transform.eulerAngles.y == 0;
+    }
+
+    bool CheckGrounded()
+    {
+        Collider2D isGrounded = Physics2D.OverlapBox(_footTransform.position, _groundCheck, 0f, _groundLayer);
+        return isGrounded;
     }
 
     void GatherInput()
@@ -82,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded) 
+        if (Input.GetKeyDown(KeyCode.Space) && CheckGrounded()) 
         {
             _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
         }
@@ -100,5 +92,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
-    } 
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(_footTransform.position,_groundCheck);
+    }
 }

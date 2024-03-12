@@ -9,7 +9,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 _groundCheck;
     [SerializeField] LayerMask _groundLayer;
     [SerializeField] float _jumpStrength = 7f;
+    [SerializeField] float _extraGravity = 900f;
+    [SerializeField] float _gravityDelay = .2f;
 
+    private float _timeInAir;
+    
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
 
@@ -32,6 +36,12 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         HandleSpriteFlip();
+        GravityDelay();
+    }
+
+    void FixedUpdate()
+    {
+        ExtraGravity();
     }
 
     public bool IsFacingRight()
@@ -91,6 +101,26 @@ public class PlayerController : MonoBehaviour
         else
         {
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
+    }
+
+    void GravityDelay()
+    {
+        if (!CheckGrounded())
+        {
+            _timeInAir += Time.deltaTime;
+        }
+        else
+        {
+            _timeInAir = 0;
+        }
+    }
+
+    void ExtraGravity()
+    {
+        if (_timeInAir >= _gravityDelay)
+        {
+            _rigidBody.AddForce(new Vector2(0f, -_extraGravity * Time.deltaTime));
         }
     }
 

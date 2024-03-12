@@ -5039,6 +5039,7 @@ MonoBehaviour:
   _jumpStrength: 12
   _extraGravity: 900
   _gravityDelay: 0.2
+  _coyoteTime: 0.2
 --- !u!95 &2011273897
 Animator:
   serializedVersion: 5

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static Action OnJump;
     public static PlayerController Instance;
 
     [SerializeField] Transform _footTransform;
@@ -11,8 +12,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _jumpStrength = 7f;
     [SerializeField] float _extraGravity = 900f;
     [SerializeField] float _gravityDelay = .2f;
+    [SerializeField] float _coyoteTime = 1f;
 
-    private float _timeInAir;
+    private float _timeInAir, _coyoteTimer;
+    private bool _doubleJumpAvailable;
     
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
@@ -30,11 +33,22 @@ public class PlayerController : MonoBehaviour
         _movement = GetComponent<Movement>();
     }
 
+    private void OnEnable()
+    {
+        OnJump += ApplyJumpForce;
+    }
+
+    private void OnDisable()
+    {
+        OnJump -= ApplyJumpForce;
+    }
+
     void Update()
     {
         GatherInput();
         Move();
-        Jump();
+        CoyoteTimer();
+        HandleJump();
         HandleSpriteFlip();
         GravityDelay();
     }
@@ -80,14 +94,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Jump()
+    void HandleJump()
     {
         if(!_frameInput.Jump) return;
-        
-        if (CheckGrounded()) 
+
+        if (CheckGrounded())
         {
-            _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
+            OnJump?.Invoke();               // '?' checks if 'OnJump' is null first
         }
+        else if (_coyoteTimer > 0)
+        {
+            OnJump?.Invoke();               // '?' checks if 'OnJump' is null first
+        }
+        else if (_doubleJumpAvailable)
+        {
+            _doubleJumpAvailable = false;
+            OnJump?.Invoke();               // '?' checks if 'OnJump' is null first
+        }
+    }
+
+    void CoyoteTimer()
+    {
+        if (CheckGrounded())
+        {
+            _coyoteTimer = _coyoteTime;
+            _doubleJumpAvailable = true;
+        }
+        else
+        {
+            _coyoteTimer -= Time.deltaTime;
+        }
+    }
+    
+    void ApplyJumpForce()
+    {
+        _rigidBody.velocity = Vector2.zero;
+        _timeInAir = 0;
+        _coyoteTimer = 0;
+        _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
 
     void HandleSpriteFlip()

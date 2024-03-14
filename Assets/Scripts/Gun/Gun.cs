@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Pool;
 
 public class Gun : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Gun : MonoBehaviour
 
     private CinemachineImpulseSource _impulseSource;
     private Animator _animator;
+    private ObjectPool<Bullet> _bulletPool;
 
     void Awake()
     {
@@ -22,6 +24,11 @@ public class Gun : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    void Start()
+    {
+        CreateBulletPool();
+    }
+    
     void Update()
     {
         Shoot();
@@ -44,7 +51,7 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButton(0)) 
         {
             OnShoot?.Invoke(); //Question mark (?) checks if "OnShoot" is null
         }
@@ -52,8 +59,9 @@ public class Gun : MonoBehaviour
 
     void ShootProjectile()
     {
-        Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
-        newBullet.Init(_bulletSpawnPoint.position, _mousePos);
+        Bullet newBullet = _bulletPool.Get();
+        //Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
+        newBullet.Init(_bulletSpawnPoint.position, _mousePos, this);
     }
 
     void FireAnimation()
@@ -73,5 +81,28 @@ public class Gun : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.Euler(0,0,angle);
         
+    }
+    
+    public void ReleaseBulletFromPool(Bullet bullet)
+    {
+        _bulletPool.Release(bullet); //happens at some point
+    }
+
+    void CreateBulletPool()
+    {
+        _bulletPool = new ObjectPool<Bullet>(() =>
+        {
+            return Instantiate(_bulletPrefab); //Instantiate whatever prefab you're using
+
+        }, bullet =>
+        {
+            bullet.gameObject.SetActive(true);
+        }, bullet1 =>
+        {
+            bullet1.gameObject.SetActive(false);
+        }, bullet =>
+        {
+            Destroy(bullet);
+        }, false, 10, 20);
     }
 }

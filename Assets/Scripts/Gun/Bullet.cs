@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     Vector2 _fireDirection;
 
     Rigidbody2D _rigidBody;
+    private Gun _gun;
 
     void Awake()
     {
@@ -21,11 +22,13 @@ public class Bullet : MonoBehaviour
         _rigidBody.velocity = _fireDirection * _moveSpeed;
     }
 
-    public void Init(Vector2 bulletSpawnPos, Vector2 mousePos)
+    public void Init(Vector2 bulletSpawnPos, Vector2 mousePos, Gun gun)
     {
         _fireDirection = (mousePos - bulletSpawnPos).normalized;
         float angle = Mathf.Atan2(_fireDirection.y, _fireDirection.x) * Mathf.Rad2Deg;
+        transform.position = bulletSpawnPos;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        _gun = gun;
     }
     
     void OnTriggerEnter2D(Collider2D other) 
@@ -36,6 +39,7 @@ public class Bullet : MonoBehaviour
         Knockback knockback = other.gameObject.GetComponent<Knockback>();
         knockback?.GetKnockedBack(PlayerController.Instance.transform.position, _knockbackThrust);
         
-        Destroy(gameObject);
+        _gun.ReleaseBulletFromPool(this);
+        //Destroy(gameObject);
     }
 }

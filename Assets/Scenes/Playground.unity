@@ -588,7 +588,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 36.470016, y: -44.700886, z: -9.554883}
+  m_LocalPosition: {x: 30.490017, y: -26.760887, z: -9.554883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -955,6 +955,7 @@ GameObject:
   - component: {fileID: 2011273897}
   - component: {fileID: 2011273899}
   - component: {fileID: 2011273900}
+  - component: {fileID: 2011273901}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -4301,7 +4302,7 @@ Transform:
   m_GameObject: {fileID: 1312036105}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 36.470016, y: -44.700886, z: -9.554883}
+  m_LocalPosition: {x: 30.490017, y: -26.760887, z: -9.554883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4865,7 +4866,7 @@ Transform:
   m_GameObject: {fileID: 817729410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.05, y: -2.54, z: 0}
+  m_LocalPosition: {x: 13.07, y: 15.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4887,7 +4888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 1
+    m_ImpulseShape: 2
     m_CustomImpulseShape:
       serializedVersion: 2
       m_Curve:
@@ -4943,7 +4944,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: 0.1, z: 0}
+  m_DefaultVelocity: {x: 0.1, y: 0.25, z: 0}
 --- !u!50 &2011273889
 Rigidbody2D:
   serializedVersion: 4
@@ -5038,6 +5039,7 @@ MonoBehaviour:
     m_Bits: 8
   _jumpStrength: 12
   _extraGravity: 900
+  _maxFallSpeed: -25
   _gravityDelay: 0.2
   _coyoteTime: 0.2
 --- !u!95 &2011273897
@@ -5121,6 +5123,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
+--- !u!114 &2011273901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817729410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c7e189d1630ed4f9ca31d7079b7864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _yLandVelocityCheck: -20
 --- !u!1 &2043640393
 GameObject:
   m_ObjectHideFlags: 0

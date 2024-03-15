@@ -10,9 +10,12 @@ public class Gun : MonoBehaviour
 
     [SerializeField] Transform _bulletSpawnPoint;
     [SerializeField] Bullet _bulletPrefab;
+    [SerializeField] float _gunCooldownTime;
 
     private static readonly int FIRE_HASH = Animator.StringToHash("Fire");
     private Vector2 _mousePos;
+    private float _timeSinceShot, _gunCooldownTimer;
+    private bool _bulletAvailable;
 
     private CinemachineImpulseSource _impulseSource;
     private Animator _animator;
@@ -33,20 +36,21 @@ public class Gun : MonoBehaviour
     {
         Shoot();
         RotateGun();
+        GunCooldownTimer();
     }
 
     void OnEnable()
     {
         OnShoot += ShootProjectile;
         OnShoot += FireAnimation;
-        OnShoot += ScreenShake;
+        //OnShoot += ScreenShake;
     }
 
     void OnDisable()
     {
         OnShoot -= ShootProjectile;
         OnShoot -= FireAnimation;
-        OnShoot -= ScreenShake;
+        //OnShoot -= ScreenShake;
     }
 
     void Shoot()
@@ -59,9 +63,14 @@ public class Gun : MonoBehaviour
 
     void ShootProjectile()
     {
-        Bullet newBullet = _bulletPool.Get();
-        //Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
-        newBullet.Init(_bulletSpawnPoint.position, _mousePos, this);
+        if (_bulletAvailable)
+        {
+            Bullet newBullet = _bulletPool.Get();
+            //Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
+            newBullet.Init(_bulletSpawnPoint.position, _mousePos, this);
+            ScreenShake();
+            _bulletAvailable = false;
+        }
     }
 
     void FireAnimation()
@@ -73,6 +82,8 @@ public class Gun : MonoBehaviour
     {
         _impulseSource.GenerateImpulse();
     }
+    
+    
 
     void RotateGun()
     {
@@ -104,5 +115,23 @@ public class Gun : MonoBehaviour
         {
             Destroy(bullet);
         }, false, 10, 20);
+    }
+    
+    void GunCooldownTimer()
+    {
+        if (_gunCooldownTimer == 0)
+        {
+            _gunCooldownTimer = _gunCooldownTime;
+            _bulletAvailable = true;
+        }
+        else
+        {
+            _gunCooldownTimer -= Time.deltaTime;
+            
+            if (_gunCooldownTimer < 0)
+            {
+                _gunCooldownTimer = 0;
+            }
+        }
     }
 }

@@ -9,17 +9,25 @@ public class Enemy : MonoBehaviour
 
     Rigidbody2D _rigidBody;
     private Movement _movement;
+    private ColorChanger _colorChanger;
 
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _movement = GetComponent<Movement>();
+        _colorChanger = GetComponent<ColorChanger>();
     }
 
     void Start() 
     {
+        Init();
         StartCoroutine(ChangeDirection());
         StartCoroutine(RandomJump());
+    }
+
+    void Init()
+    {
+        _colorChanger.SetRandomColor();
     }
 
     IEnumerator ChangeDirection()

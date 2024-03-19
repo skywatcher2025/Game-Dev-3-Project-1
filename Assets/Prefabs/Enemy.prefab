@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 3313540786046931640}
   - component: {fileID: 185773502829962846}
   - component: {fileID: 3257530305185786649}
+  - component: {fileID: 3054095393419643358}
+  - component: {fileID: 4988824648527167472}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -177,6 +179,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _knockbackTime: 0.2
+--- !u!114 &3054095393419643358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500829499347730933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d90ec4dab1b8f4f8545e5040d2800b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultMaterial: {fileID: 2100000, guid: 3f4fd5258dd994b43b744fa5207bb714, type: 2}
+  _whiteFlashMaterial: {fileID: 2100000, guid: b7b7322ac80cac940be7f7babf3b2ea3, type: 2}
+  _flashTime: 0.1
+--- !u!114 &4988824648527167472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500829499347730933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ef5252d94cc9043be6a7e877f8f8cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colors:
+  - {r: 0.8301887, g: 0.36340332, b: 0.36340332, a: 1}
+  - {r: 0.37889475, g: 0.10412957, b: 0.4716981, a: 1}
+  - {r: 0.10808116, g: 0.4339623, b: 0.36660084, a: 1}
+  - {r: 0.21882151, g: 0.20676397, b: 0.4528302, a: 1}
+  _fillSpriteRenderer: {fileID: 7564454557696005338}
 --- !u!1 &5153281642299242202
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +286,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1899769647, guid: 01b49b46e6384a6419be35fbdd9b5c1a, type: 3}
-  m_Color: {r: 0.34901962, g: 0.4156863, b: 0.5372549, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

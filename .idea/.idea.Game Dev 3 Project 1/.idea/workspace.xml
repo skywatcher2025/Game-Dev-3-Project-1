@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16885fc2-fb0f-46d8-bf24-69d412ede578" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Game Dev 3 Project 1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Game Dev 3 Project 1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Playground.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Playground.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tilemap/Tiles/Rule_Tile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tilemap/Tiles/Rule_Tile.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Combat/DeathHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Combat/Flash.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Misc/ColorChanger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Misc/Movement.cs" root0="FORCE_HIGHLIGHTING" />
@@ -97,7 +98,7 @@
       <workItem from="1710255927870" duration="4817000" />
       <workItem from="1710428364293" duration="6919000" />
       <workItem from="1710471211731" duration="2432000" />
-      <workItem from="1710859933531" duration="2957000" />
+      <workItem from="1710859933531" duration="5236000" />
     </task>
     <servers />
   </component>

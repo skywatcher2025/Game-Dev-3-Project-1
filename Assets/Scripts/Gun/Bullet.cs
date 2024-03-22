@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] float _moveSpeed = 10f;
     [SerializeField] int _damageAmount = 1;
     [SerializeField] float _knockbackThrust = 20f;
+    [SerializeField] private GameObject _shatterVFX;
 
     Vector2 _fireDirection;
 
@@ -20,6 +22,16 @@ public class Bullet : MonoBehaviour
     void FixedUpdate()
     {
         _rigidBody.velocity = _fireDirection * _moveSpeed;
+    }
+
+    private void OnDestroy()
+    {
+        SpawnShatterVFX();
+    }
+
+    private void OnDisable()
+    {
+        SpawnShatterVFX();
     }
 
     public void Init(Vector2 bulletSpawnPos, Vector2 mousePos, Gun gun)
@@ -44,5 +56,11 @@ public class Bullet : MonoBehaviour
         
         _gun.ReleaseBulletFromPool(this);
         //Destroy(gameObject);
+    }
+    
+    void SpawnShatterVFX()
+    {
+        GameObject shatterVFX = Instantiate(_shatterVFX, this.transform.position, this.transform.rotation);
+        shatterVFX.transform.SetParent(this.transform);
     }
 }

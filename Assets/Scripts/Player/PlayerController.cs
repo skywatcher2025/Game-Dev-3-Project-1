@@ -1,22 +1,31 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public static Action OnJump;
+    //public Action OnDashStart;
+    //public Action OnDashEnd;
     public static PlayerController Instance;
 
     [SerializeField] Transform _footTransform;
     [SerializeField] Vector2 _groundCheck;
     [SerializeField] LayerMask _groundLayer;
     [SerializeField] float _jumpStrength = 7f;
+    [SerializeField] float _dashStrength = 7f;
     [SerializeField] float _extraGravity = 900f;
     [SerializeField] float _maxFallSpeed = -25f;
     [SerializeField] float _gravityDelay = .2f;
     [SerializeField] float _coyoteTime = 1f;
+    [SerializeField] private float _dashDelay = .5f;
+    [SerializeField] float  _dashTime = .2f;
+    [SerializeField] private GameObject _poofVFX;
 
     private float _timeInAir, _coyoteTimer;
     private bool _doubleJumpAvailable;
+    private float  _dashTimer;
+    private bool _dashAvailable;
     
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
@@ -32,6 +41,8 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _playerInput = GetComponent<PlayerInput>();
         _movement = GetComponent<Movement>();
+
+        _dashAvailable = true;
     }
 
     private void OnEnable()
@@ -50,8 +61,12 @@ public class PlayerController : MonoBehaviour
         Move();
         CoyoteTimer();
         HandleJump();
+        DashTimer();
+        HandleDash();
         HandleSpriteFlip();
         GravityDelay();
+        
+        //CustomDebug();
     }
 
     void FixedUpdate()
@@ -111,6 +126,8 @@ public class PlayerController : MonoBehaviour
         {
             _doubleJumpAvailable = false;
             OnJump?.Invoke();               // '?' checks if 'OnJump' is null first
+
+            Instantiate(_poofVFX, new Vector3(transform.position.x, transform.position.y - 1, transform.position.z), transform.rotation);
         }
     }
 
@@ -134,6 +151,79 @@ public class PlayerController : MonoBehaviour
         _coyoteTimer = 0;
         _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
+    
+    //####################################
+
+    void HandleDash()
+    {
+        if(!_frameInput.DashLeft && !_frameInput.DashRight) return;
+
+        if (_frameInput.DashLeft && _dashAvailable)
+        {
+            //OnDashStart?.Invoke();
+            _movement.CanMoveFalse();
+            ApplyDashForce(true);
+            _dashAvailable = false;
+            _dashTimer = _dashDelay;
+        }
+
+        if (_frameInput.DashRight && _dashAvailable)
+        {
+            //OnDashStart.Invoke();
+            _movement.CanMoveFalse();
+            ApplyDashForce(false);
+            _dashAvailable = false;
+            _dashTimer = _dashDelay;
+        }
+    }
+    
+    public void ApplyDashForce(bool left)
+    {
+        //_rigidBody.velocity = Vector2.zero;
+        
+        if (left)
+        {
+            _rigidBody.AddForce(Vector2.left * _dashStrength, ForceMode2D.Impulse);
+            StartCoroutine(DashRoutine());
+        }
+        else
+        {
+            _rigidBody.AddForce(Vector2.right * _dashStrength, ForceMode2D.Impulse);
+            StartCoroutine(DashRoutine());
+        }
+    }
+
+    void DashTimer()
+    {
+        if(_dashTimer < 0)
+        {
+            _dashTimer = 0;
+        }
+
+        if (_dashTimer == 0)
+        {
+            _dashAvailable = true;
+        }
+        else
+        {
+            _dashTimer -= Time.deltaTime;
+        }
+    }
+    
+    IEnumerator DashRoutine()
+    {
+        yield return new WaitForSeconds(_dashTime);
+        StopDashRoutine();
+        //OnDashEnd?.Invoke();
+        _movement.CanMoveTrue();
+    }
+
+    void StopDashRoutine()
+    {
+        _rigidBody.velocity = Vector2.zero;
+    }
+    
+    //####################################
 
     void HandleSpriteFlip()
     {
@@ -177,5 +267,12 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(_footTransform.position,_groundCheck);
+    }
+
+    void CustomDebug()
+    {
+        if(_frameInput.Jump) Debug.Log("Space pressed");
+        if(_frameInput.DashLeft) Debug.Log("Q pressed");
+        if(_frameInput.DashRight) Debug.Log("E pressed");
     }
 }

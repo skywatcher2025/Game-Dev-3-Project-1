@@ -12,23 +12,41 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private Knockback _knockback;
+    //private PlayerController _playerController;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _knockback = GetComponent<Knockback>();
+        //_playerController = GetComponent<PlayerController>();
     }
 
     private void OnEnable()
     {
         _knockback.OnKnockbackStart += CanMoveFalse;    //Creates Listener
         _knockback.OnKnockbackEnd += CanMoveTrue;       //Creates Listener
+        
+        /*
+        if (_playerController)
+        {
+            _playerController.OnDashStart += CanMoveFalse;
+            _playerController.OnDashEnd += CanMoveTrue;
+        }
+        */
     }
 
     private void OnDisable()
     {
         _knockback.OnKnockbackStart -= CanMoveFalse;    //Removes Listener
         _knockback.OnKnockbackEnd -= CanMoveTrue;       //Removes Listener
+        
+        /*
+        if (_playerController)
+        {
+            _playerController.OnDashStart -= CanMoveFalse;
+            _playerController.OnDashEnd -= CanMoveTrue;
+        }
+        */
     }
 
     private void FixedUpdate()
@@ -36,12 +54,12 @@ public class Movement : MonoBehaviour
         Move();
     }
 
-    void CanMoveTrue()
+    public void CanMoveTrue() //change from public later
     {
         _canMove = true;
     }
 
-    void CanMoveFalse()
+    public void CanMoveFalse() //change from public later
     {
         _canMove = false;
     }

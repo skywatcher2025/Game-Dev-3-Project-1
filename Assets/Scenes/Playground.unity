@@ -4436,7 +4436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletSpawnPoint: {fileID: 710606986}
   _bulletPrefab: {fileID: -5611149099131491127, guid: 9dca18bc1fee05d488922a753a58ca8d, type: 3}
-  _gunCooldownTime: 0.1
+  _gunCooldownTime: 0.5
 --- !u!95 &1414218016
 Animator:
   serializedVersion: 5
@@ -4868,6 +4868,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1982649396}
   - component: {fileID: 1982649395}
+  - component: {fileID: 1982649397}
   m_Layer: 0
   m_Name: DeathHandler
   m_TagString: Untagged
@@ -4902,6 +4903,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &1982649397
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982649394}
+  m_Enabled: 1
+  m_SortingLayerID: 1682204307
+  m_SortingLayer: 1
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!4 &2011273886
 Transform:
   m_ObjectHideFlags: 0
@@ -5085,10 +5098,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _jumpStrength: 12
+  _dashStrength: 20
   _extraGravity: 900
   _maxFallSpeed: -25
   _gravityDelay: 0.2
   _coyoteTime: 0.2
+  _dashDelay: 0.5
+  _dashTime: 0.2
+  _poofVFX: {fileID: 5166267944648993331, guid: f9f89006533e8474199b74d98175dc9a, type: 3}
 --- !u!95 &2011273897
 Animator:
   serializedVersion: 5

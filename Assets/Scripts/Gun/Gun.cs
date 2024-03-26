@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.Pool;
@@ -11,7 +12,10 @@ public class Gun : MonoBehaviour
     [SerializeField] Transform _bulletSpawnPoint;
     [SerializeField] Bullet _bulletPrefab;
     [SerializeField] float _gunCooldownTime;
+    [SerializeField] private GameObject _muzzleFlash;
+    [SerializeField] private float _muzzleFlashTime = .05f;
 
+    private Coroutine _muzzleFlashRoutine;
     private static readonly int FIRE_HASH = Animator.StringToHash("Fire");
     private Vector2 _mousePos;
     private float _timeSinceShot, _gunCooldownTimer;
@@ -44,6 +48,7 @@ public class Gun : MonoBehaviour
         OnShoot += ShootProjectile;
         OnShoot += FireAnimation;
         //OnShoot += ScreenShake;
+        //OnShoot += MuzzleFlash;
     }
 
     void OnDisable()
@@ -51,6 +56,7 @@ public class Gun : MonoBehaviour
         OnShoot -= ShootProjectile;
         OnShoot -= FireAnimation;
         //OnShoot -= ScreenShake;
+        //OnShoot -= MuzzleFlash;
     }
 
     void Shoot()
@@ -69,6 +75,7 @@ public class Gun : MonoBehaviour
             //Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
             newBullet.Init(_bulletSpawnPoint.position, _mousePos, this);
             ScreenShake();
+            MuzzleFlash();
             _bulletAvailable = false;
         }
     }
@@ -92,6 +99,23 @@ public class Gun : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.Euler(0,0,angle);
         
+    }
+
+    void MuzzleFlash()
+    {
+        if (_muzzleFlashRoutine != null)
+        {
+            StopCoroutine(_muzzleFlashRoutine);
+        }
+
+        _muzzleFlashRoutine = StartCoroutine(MuzzleFlashRoutine());
+    }
+
+    IEnumerator MuzzleFlashRoutine()
+    {
+        _muzzleFlash.SetActive(true);
+        yield return new WaitForSeconds(_muzzleFlashTime);
+        _muzzleFlash.SetActive(false);
     }
     
     public void ReleaseBulletFromPool(Bullet bullet)

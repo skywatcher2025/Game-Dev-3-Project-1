@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Splat2
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 8f8366c0c6ec3d94eaaedcd67e002541, type: 3}
   Loop: 0
-  RandomizePitch: 0
+  RandomizePitch: 1
   RandomizePitchRangeModifier: 0.1
   Volume: 1
   Pitch: 1

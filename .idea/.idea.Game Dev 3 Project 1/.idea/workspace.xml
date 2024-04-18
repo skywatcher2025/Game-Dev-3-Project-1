@@ -3,6 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="16885fc2-fb0f-46d8-bf24-69d412ede578" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Game Dev 3 Project 1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Game Dev 3 Project 1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Sound SOs/FightMusic.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Sound SOs/FightMusic.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Jump.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Jump.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Shoot.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Shoot.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Splat1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Splat1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Splat2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Sound SOs/Splat2.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Sounds Collection SO.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Sounds Collection SO.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Textures/Particle No Border.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Textures/Particle No Border.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Playground.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Playground.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/SoundsCollectionSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/SoundsCollectionSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gun/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gun/Bullet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gun/Gun.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gun/Gun.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/InputActions/PlayerInputActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InputActions/PlayerInputActions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/InputActions/PlayerInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InputActions/PlayerInputActions.inputactions" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +121,11 @@
       <workItem from="1712069949520" duration="4711000" />
       <workItem from="1712356544247" duration="3194000" />
       <workItem from="1712359954342" duration="2015000" />
+      <workItem from="1712674457184" duration="2770000" />
+      <workItem from="1712848001273" duration="2479000" />
+      <workItem from="1712951453280" duration="1169000" />
+      <workItem from="1713281635902" duration="2592000" />
+      <workItem from="1713452487939" duration="4566000" />
     </task>
     <servers />
   </component>

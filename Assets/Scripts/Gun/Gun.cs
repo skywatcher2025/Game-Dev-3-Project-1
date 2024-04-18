@@ -3,15 +3,20 @@ using System.Collections;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.Pool;
+using UnityEngine.TextCore.LowLevel;
 
 public class Gun : MonoBehaviour
 {
     public static Action OnShoot;
+    public static Action OnLob;
     public Transform BulletSpawnPoint => _bulletSpawnPoint;
 
     [SerializeField] Transform _bulletSpawnPoint;
+    [SerializeField] private Transform _grenadeSpawnPoint;
     [SerializeField] Bullet _bulletPrefab;
+    [SerializeField] private Grenade _grenadePrefab;
     [SerializeField] float _gunCooldownTime;
+    [SerializeField] private float _grenadeCooldownTime;
     [SerializeField] private GameObject _muzzleFlash;
     [SerializeField] private float _muzzleFlashTime = .05f;
 
@@ -19,7 +24,9 @@ public class Gun : MonoBehaviour
     private static readonly int FIRE_HASH = Animator.StringToHash("Fire");
     private Vector2 _mousePos;
     private float _timeSinceShot, _gunCooldownTimer;
-    private bool _bulletAvailable;
+    private float _timeSinceLob, _grenadeCooldownTimer;
+    private bool _bulletAvailable = true;
+    private bool _grenadeAvailable = true;
 
     private CinemachineImpulseSource _impulseSource;
     private Animator _animator;
@@ -39,14 +46,17 @@ public class Gun : MonoBehaviour
     void Update()
     {
         Shoot();
+        Lob();
         RotateGun();
         GunCooldownTimer();
+        GrenadeCooldownTimer();
     }
 
     void OnEnable()
     {
         OnShoot += ShootProjectile;
         OnShoot += FireAnimation;
+        OnLob += ShootGrenade;
         //OnShoot += ScreenShake;
         //OnShoot += MuzzleFlash;
     }
@@ -55,6 +65,7 @@ public class Gun : MonoBehaviour
     {
         OnShoot -= ShootProjectile;
         OnShoot -= FireAnimation;
+        OnLob -= ShootGrenade;
         //OnShoot -= ScreenShake;
         //OnShoot -= MuzzleFlash;
     }
@@ -63,21 +74,45 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetMouseButton(0)) 
         {
-            OnShoot?.Invoke(); //Question mark (?) checks if "OnShoot" is null
+            //Debug.Log("Left Click");
+            if (_bulletAvailable)
+            {
+                OnShoot?.Invoke(); //Question mark (?) checks if "OnShoot" is null
+            }
         }
     }
 
     void ShootProjectile()
     {
-        if (_bulletAvailable)
+        Bullet newBullet = _bulletPool.Get();
+        //Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
+        newBullet.Init(_bulletSpawnPoint.position, _mousePos, this);
+        ScreenShake();
+        MuzzleFlash();
+        _bulletAvailable = false;
+        _gunCooldownTimer = _gunCooldownTime;
+    }
+    
+    void Lob()
+    {
+        if (Input.GetMouseButton(1)) 
         {
-            Bullet newBullet = _bulletPool.Get();
-            //Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
-            newBullet.Init(_bulletSpawnPoint.position, _mousePos, this);
-            ScreenShake();
-            MuzzleFlash();
-            _bulletAvailable = false;
+            //Debug.Log("Right Click");
+            if (_grenadeAvailable)
+            {
+                OnLob?.Invoke(); //Question mark (?) checks if "OnLob" is null
+            }
         }
+    }
+
+    void ShootGrenade()
+    {
+        Grenade newGrenade = Instantiate(_grenadePrefab, _grenadeSpawnPoint.position, Quaternion.identity);
+        newGrenade.Init(_grenadeSpawnPoint.position, _mousePos, this);
+        ScreenShake();
+        MuzzleFlash();
+        _grenadeAvailable = false;
+        _grenadeCooldownTimer = _grenadeCooldownTime;
     }
 
     void FireAnimation()
@@ -143,7 +178,7 @@ public class Gun : MonoBehaviour
     
     void GunCooldownTimer()
     {
-        if (_gunCooldownTimer == 0)
+        if (_gunCooldownTimer == 0 && _bulletAvailable == false)
         {
             _gunCooldownTimer = _gunCooldownTime;
             _bulletAvailable = true;
@@ -155,6 +190,24 @@ public class Gun : MonoBehaviour
             if (_gunCooldownTimer < 0)
             {
                 _gunCooldownTimer = 0;
+            }
+        }
+    }
+    
+    void GrenadeCooldownTimer()
+    {
+        if (_grenadeCooldownTimer == 0 && _grenadeAvailable == false)
+        {
+            _grenadeCooldownTimer = _grenadeCooldownTime;
+            _grenadeAvailable = true;
+        }
+        else
+        {
+            _grenadeCooldownTimer -= Time.deltaTime;
+            
+            if (_grenadeCooldownTimer < 0)
+            {
+                _grenadeCooldownTimer = 0;
             }
         }
     }

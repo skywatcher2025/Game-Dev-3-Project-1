@@ -20,15 +20,21 @@ public class AudioManager : MonoBehaviour
     private void OnEnable()
     {
         Gun.OnShoot += Gun_OnShoot;
+        Gun.OnLob += Gun_OnLob;
         PlayerController.OnJump += PlayerController_OnJump;
         Health.OnDeath += Health_OnDeath;
+        Grenade.OnFlash += Grenade_OnBeep;
+        Grenade.OnExplode += Grenade_OnExplode;
     }
 
     private void OnDisable()
     {
         Gun.OnShoot -= Gun_OnShoot;
+        Gun.OnLob -= Gun_OnLob;
         PlayerController.OnJump -= PlayerController_OnJump;
         Health.OnDeath -= Health_OnDeath;
+        Grenade.OnFlash -= Grenade_OnBeep;
+        Grenade.OnExplode -= Grenade_OnExplode;
     }
 
     void PlayRandomSound(SoundSO[] sounds)
@@ -99,6 +105,21 @@ public class AudioManager : MonoBehaviour
     void Gun_OnShoot()
     {
         PlayRandomSound(_soundsCollectionSO.GunShoot);
+    }
+
+    void Gun_OnLob()
+    {
+        PlayRandomSound(_soundsCollectionSO.Lob);
+    }
+
+    void Grenade_OnBeep()
+    {
+        PlayRandomSound(_soundsCollectionSO.Beep);
+    }
+
+    void Grenade_OnExplode()
+    {
+        PlayRandomSound(_soundsCollectionSO.Explode);
     }
 
     void PlayerController_OnJump()

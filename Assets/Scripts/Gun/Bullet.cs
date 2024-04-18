@@ -69,4 +69,9 @@ public class Bullet : MonoBehaviour
         GameObject shatterVFX = Instantiate(_shatterVFX, this.transform.position, this.transform.rotation);
         shatterVFX.transform.SetParent(this.transform);
     }
+        
+    //#############################################################
+    //Physics2D.OverlapCircleAll() //Useful for grenade later on...
+    //PlayerPrefs.SetInt(); //Useful for saving data like settings and high scores that you don't care too much abt
+    //#############################################################
 }
